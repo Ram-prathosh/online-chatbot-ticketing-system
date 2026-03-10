@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Admin Panel</title>
+</head>
+<body>
+
+<h2>Admin Panel - Tickets</h2>
+
+<ul>
+{% for ticket in tickets %}
+<li>Ticket {{ticket.id}} : {{ticket.issue}}</li>
+{% endfor %}
+</ul>
+
+</body>
+</html>
