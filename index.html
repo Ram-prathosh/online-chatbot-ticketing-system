@@ -1,15 +1,146 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Chatbot Ticket System</title>
-<link rel="stylesheet" href="/static/style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Helpdesk Ticketing System</title>
+<style>
+body{
+    font-family: Arial, sans-serif;
+    background:#f4f4f4;
+    margin:0;
+    padding:0;
+}
+.container{
+    width:400px;
+    margin:40px auto;
+    background:white;
+    border-radius:10px;
+    box-shadow:0 0 10px rgba(0,0,0,0.2);
+    overflow:hidden;
+}
+.header{
+    background:#007bff;
+    color:white;
+    padding:15px;
+    text-align:center;
+}
+.chatbox{
+    height:300px;
+    padding:10px;
+    overflow-y:auto;
+    border-bottom:1px solid #ccc;
+}
+.message{
+    margin:10px 0;
+    padding:10px;
+    border-radius:5px;
+}
+.bot{
+    background:#e3f2fd;
+}
+.user{
+    background:#d4edda;
+    text-align:right;
+}
+.input-area{
+    display:flex;
+}
+input{
+    flex:1;
+    padding:10px;
+    border:none;
+    outline:none;
+}
+button{
+    background:#007bff;
+    color:white;
+    border:none;
+    padding:10px 15px;
+    cursor:pointer;
+}
+button:hover{
+    background:#0056b3;
+}
+.ticket{
+    padding:10px;
+    background:#fff3cd;
+    margin:10px;
+    border-radius:5px;
+}
+</style>
 </head>
 <body>
 
-<h1>Online Chatbot Ticketing System</h1>
+<div class="container">
+    <div class="header">
+        <h2>AI Helpdesk Chatbot</h2>
+    </div>
 
-<a href="/chatbot">Open Chatbot</a><br><br>
-<a href="/admin">Admin Panel</a>
+    <div class="chatbox" id="chatbox">
+        <div class="message bot">
+            Hello! How can I help you today?
+        </div>
+    </div>
+
+    <div class="input-area">
+        <input type="text" id="userInput" placeholder="Type your issue...">
+        <button onclick="sendMessage()">Send</button>
+    </div>
+
+    <div class="ticket" id="ticketBox">
+        <strong>Ticket Status:</strong>
+        <p>No ticket created.</p>
+    </div>
+</div>
+
+<script>
+function sendMessage(){
+
+    let input = document.getElementById("userInput");
+    let chatbox = document.getElementById("chatbox");
+    let ticketBox = document.getElementById("ticketBox");
+
+    let userText = input.value;
+
+    if(userText.trim() === ""){
+        return;
+    }
+
+    let userMessage = document.createElement("div");
+    userMessage.className = "message user";
+    userMessage.innerText = userText;
+    chatbox.appendChild(userMessage);
+
+    let botMessage = document.createElement("div");
+    botMessage.className = "message bot";
+
+    if(userText.toLowerCase().includes("network")){
+        botMessage.innerText =
+        "Network issue detected. Creating support ticket.";
+        ticketBox.innerHTML =
+        "<strong>Ticket Status:</strong><p>Ticket #101 Created for Network Issue</p>";
+    }
+    else if(userText.toLowerCase().includes("password")){
+        botMessage.innerText =
+        "Password reset request noted. Ticket created.";
+        ticketBox.innerHTML =
+        "<strong>Ticket Status:</strong><p>Ticket #102 Created for Password Reset</p>";
+    }
+    else{
+        botMessage.innerText =
+        "Our AI assistant received your issue. Support ticket created.";
+        ticketBox.innerHTML =
+        "<strong>Ticket Status:</strong><p>Ticket #103 Created Successfully</p>";
+    }
+
+    chatbox.appendChild(botMessage);
+
+    input.value = "";
+
+    chatbox.scrollTop = chatbox.scrollHeight;
+}
+</script>
 
 </body>
 </html>
